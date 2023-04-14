@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TarefasPET</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <link href="https://unpkg.com/slim-select@latest/dist/slimselect.css" rel="stylesheet"/>
+    <%= stylesheet_link_tag  'application', 'actiontext','data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag "application", 'data-turbo-track': 'reload' ,defer: true %>
+    <%= turbo_include_tags %>
+  </head>
+
+  <body class="h-screen bg-gradient-to-br from-indigo-500 to-pink-500 via-blue-800 antialiased bg-no-reapeat text-white">
+  <header >
+    <%= render "shared/navbar" %>
+  </header>
+    <% if notice %>
+    <p> <%= notice %></p>
+    <% end %>
+    <% if alert %>
+    <p> <%= alert %></p>
+    <% end %>
+
+    <div class="container mx-auto my-10 lg:px-10 px-4">
+      <%= yield %>
+    </div>
+
+
+  </body>
+</html>

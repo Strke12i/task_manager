@@ -1,0 +1,29 @@
+<div>
+<nav class="bg-gray-800">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <div class="flex items-center">
+        <div class="flex-shrink-0">
+          <%= link_to "My Website", root_path, class: "text-white text-2xl font-bold" %>
+        </div>
+        <div class="hidden md:block">
+          <div class="ml-10 flex items-baseline space-x-4">
+            <%= link_to "Tasks", tasks_path, class: "text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
+            <% if user_signed_in? %>
+              <%= link_to "Edit Profile", edit_user_registration_path , class: "text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium" %>
+          <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="-mr-2 flex">
+        <% if user_signed_in? %>
+          <%= button_to "Log out", destroy_user_session_path, method: :delete,  class:"inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" %>
+        <% else %>
+          <%= link_to "Sign in", new_user_session_path, class:"inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"%>
+      <% end %>
+      </div>
+    </div>
+  </div>
+</nav>
+
+</div>

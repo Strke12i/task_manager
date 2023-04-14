@@ -1,0 +1,26 @@
+<p class="text-center text-green-500"><%= notice %></p>
+
+<h1 class="text-center pb-5 font-extrabold text-3xl ">Tasks</h1>
+<div class="pb-3">
+  <%= link_to "New task", new_task_path, class: "bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110" %>
+</div>
+<div class="w-full">
+  <div class="border border-gray-500 rounded-lg overflow-hidden">
+    <table class="min-x-max w-full table-auto">
+      <thead>
+      <tr class="bg-gray-200 text-gray-700 uppercase text-sm leading-normal">
+        <th class="py-3 px-6 text-left w-30"> Name</th>
+        <th class="py-3 px-6 text-left w-45">Description</th>
+        <th class="py-3 px-6 text-left w-35">Users</th>
+        <th class="py-3 px-6 text-left w-35">Due Date</th>
+        <th class="py-3 px-6 text-left ">State</th>
+      </tr>
+      </thead>
+      <tbody>
+        <%= render "tasks",tasks:@tasks %>
+      </tbody>
+
+    </table>
+
+  </div>
+</div>

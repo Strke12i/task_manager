@@ -1,0 +1,76 @@
+
+<%= form_with(model: @task) do |form| %>
+  <% if @task.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
+      <ul>
+        <% @task.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <div class="relative mt-1 pb-2">
+      <%= form.label :name %>
+      <%= form.text_field :name, class: input_class %>
+      <%= render "shared/input_custom" %>
+    </div>
+    <div class="relative mt-1 pb-2">
+      <%= form.label :description %>
+      <%= form.rich_text_area :description, class: input_class %>
+      <%#= render "shared/input_custom" %>
+    </div>
+    <div class="relative mt-1 pb-2 text-black">
+      <%= form.label :due_date ,class:"text-white"%>
+      <br>
+      <%= form.datetime_field :due_date, class: "w-35 border border-gray-300 rounded-lg py-2 pl-8 pr-3 transition-all duration-300 ease-in-out focus:outline-none focus:shadow-outline focus:border-blue-500"%>
+    </div>
+
+    <label class="relative inline-flex items-center cursor-pointer">
+      <%= form.label "Finish Task?", class:"mt-1 pb-2 mr-3" %>
+      <%= form.check_box :finished, class: "form-checkbox h-5 w-5 text-gray-600" %>
+    </label>
+
+    <% if @task.attachments.attached? %>
+      <div class="relative mt-3 pb-2">
+        <%= turbo_frame_tag "attachments" do %>
+        <div class="flex flex-wrap" id = "task-attachments">
+          <%= render "attachments", attachments:@task.attachments %>
+        </div>
+        <%end %>
+      </div>
+  <% end %>
+
+    <div class="relative mt-3 pb-2">
+      <%= form.label "Add new attachment" %>
+      <%= form.file_field :attachments, multiple: true ,class: "text-black bg-gray-100 py-2 px-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+
+    </div>
+
+    <div class="relative mt-3 pb-2">
+      <%= form.label :users %>
+      <%= form.select :users,options_for_select(User.where.not(id: [current_user.id,@task.user_id]).pluck(:name, :id), @task.assigned_users.map(&:id)),{}, {multiple: true ,data: {controller: "slim"}} %>
+        </div>
+
+    <%= form.hidden_field :user_id, value: current_user.id %>
+
+    <div class="mt-4 pb-4">
+      <%= form.submit class: "bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full shadow-md transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"%>
+
+    </div>
+  </div>
+
+<% end %>
+
+<div>
+  <%= link_to "Show this task", @task %> |
+  <%= link_to "Back to tasks", tasks_path %>
+</div>
+
+
+<%#= form_with url:delete_attachment_from_task_task_path(@task,attach_id:attachment.id),method: :delete, remote: true do |f| %>
+<%#= f.submit "Excluir" %>
+<%# end %>
+<%#= turbo_stream.replace"file-#{attachment.id}",partial:"tasks/attachments",locals:{attachment: attachment} %>

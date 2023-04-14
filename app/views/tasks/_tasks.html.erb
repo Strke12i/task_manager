@@ -1,0 +1,26 @@
+<% @tasks.each do |task| %>
+  <tr class="border-b border-gray-400 bg-gradient-to-bl">
+    <td class="py-3 px-6 text-left "><%= link_to task.name, task, class: "hover:text-red-400 font-bold" %></td>
+    <td class="py-3 px-6 text-left "><%= task.description %></td>
+    <td class="py-3 px-6 text-left "><% output = "" %>
+      <% task.assigned_users.each do |element| %>
+        <% if element != task.assigned_users.last %>
+          <% output += "#{element.name.humanize}, " %>
+        <% else %>
+          <% output += "#{element.name.humanize}" %>
+        <% end %>
+      <% end %>
+      <%= output %>
+    </td>
+    <td class="py-3 px-6 text-left font-semibold <%= date_compare(task.due_date) %>"><%= task.due_date %></td>
+    <td class="py-3 px-6 text-left ">
+      <% if task.user_id == current_user.id %>
+        <%= button_to task.finished? ? "Open" : "Close", update_task_state_task_path(task), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :patch, class: button_class %>
+      <% else %>
+        <%= task.finished? ? "Opened" : "Closed" %>
+      <% end %>
+
+
+    </td>
+  </tr>
+<% end %>

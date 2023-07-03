@@ -3,8 +3,9 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
       <div class="flex items-center">
-        <div class="flex-shrink-0">
-          <%= link_to "My Website", root_path, class: "text-white text-2xl font-bold" %>
+        <div class="flex">
+          <%= link_to "Manager", root_path, class: "text-white text-2xl font-bold" %>
+          <img class="w-12 h-12 rounded-full ml-3 " src="<%=asset_path("logo.jpeg")%>" alt="Foto">
         </div>
         <div class="hidden md:block">
           <div class="ml-10 flex items-baseline space-x-4">

@@ -33,7 +33,7 @@ module TarefasPET
 
     # Don't generate system test files.
     config.generators.system_tests = nil
-    # config.exceptions_app = self.routes
+    config.exceptions_app = self.routes
     config.generators.system_tests = nil
     config.action_view.form_with_generates_remote_forms = true
     config.action_dispatch.default_protect_from_forgery = false

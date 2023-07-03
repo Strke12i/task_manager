@@ -41,3 +41,22 @@ pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 
 # Allow puma to be restarted by `bin/rails restart` command.
 plugin :tmp_restart
+
+
+if ENV['RAILS_ENV'] == 'production'
+    app_dir = File.expand_path("../..", __FILE__)
+    shared_dir = "#{app_dir}/shared"
+  
+    stderr_path "#{shared_dir}/log/puma.stderr.log"
+    stdout_path "#{shared_dir}/log/puma.stdout.log"
+    bind "unix://#{shared_dir}/sockets/puma.sock"
+  
+    before_fork do
+      ActiveRecord::Base.connection_pool.disconnect!
+    end
+  
+    on_worker_boot do
+      ActiveRecord::Base.establish_connection(YAML.load_file("#{app_dir}/config/database.yml")['production'])
+    end
+  end
+  

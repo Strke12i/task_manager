@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: %i[ show edit update destroy ]
+  before_action :set_task, only: %i[ show edit update destroy require_user ]
   before_action :require_user, except: [:create,:index,:new]
 
   def update_task_state
@@ -100,7 +100,7 @@ class TasksController < ApplicationController
     end
 
     def require_user
-      redirect_to root_path, alert: "You don´t have permission to go there" unless @task.assigned_users.include?(current_user)
+      redirect_to root_path, alert: "You don´t have permission to go there" unless @task == nil || @task.assigned_users.include?(current_user)
     end
 
     # Only allow a list of trusted parameters through.

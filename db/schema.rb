@@ -11,6 +11,9 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2023_03_11_012729) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -49,17 +52,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_11_012729) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "assigned_users_tasks", id: false, force: :cascade do |t|
-    t.integer "assigned_user_id", null: false
-    t.integer "task_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["assigned_user_id", "task_id"], name: "index_assigned_users_tasks_on_assigned_user_id_and_task_id"
-    t.index ["task_id", "assigned_user_id"], name: "index_assigned_users_tasks_on_task_id_and_assigned_user_id"
-  end
-
   create_table "tasks", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.string "name"
     t.text "description"
     t.date "due_date"
@@ -71,8 +65,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_11_012729) do
   end
 
   create_table "tasks_users", id: false, force: :cascade do |t|
-    t.integer "task_id", null: false
-    t.integer "user_id", null: false
+    t.bigint "task_id", null: false
+    t.bigint "user_id", null: false
   end
 
   create_table "users", force: :cascade do |t|
